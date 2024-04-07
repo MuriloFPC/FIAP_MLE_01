@@ -13,7 +13,7 @@ def GetCsv(url, name):
         os.makedirs(_basePath)
     urllib.request.urlretrieve(url, _basePath+name)
 
-def ReadCsv(fileName):
+def ReadCsv(fileName, removeHeader=False):
     with open(_basePath+fileName, 'r', encoding='UTF-8') as file:
         return [line.rstrip() for line in file]
 

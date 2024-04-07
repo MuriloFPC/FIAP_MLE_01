@@ -11,12 +11,12 @@ def download_csv():
 
 def LerCsv():
     csv = ReadCsv(_fileNameProd)
-    csv_colunas = csv[0].split(';')
+    csv_colunas = ['Nome','Nome Amigavel'] + [x for x in range(1997,2023)]
     lista = []
     for i in range(1, len(csv)):
         csv_linha = csv[i].split(';')
         retorno = Retorno(Id=csv_linha[0], Produto=csv_linha[1], Dados=[])
-        for j in range(2,len(csv_colunas)):
+        for j in range(0,len(csv_colunas)):
             retorno.Dados.append(RetornoAuxiliar(Ano=csv_colunas[j], Valor=csv_linha[j]))
         lista.append(retorno)
     return lista
