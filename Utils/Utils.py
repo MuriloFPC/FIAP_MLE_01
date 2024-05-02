@@ -15,5 +15,6 @@ def GetCsv(url, name):
 
 def ReadCsv(fileName, removeHeader=False):
     with open(_basePath+fileName, 'r', encoding='UTF-8') as file:
-        return [line.rstrip() for line in file]
-
+        if(removeHeader):
+            return [line.rstrip().replace('\t', ';') for line in file][1:]
+        return [line.rstrip().replace('\t', ';') for line in file]

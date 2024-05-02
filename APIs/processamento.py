@@ -17,20 +17,31 @@ def download_csv():
 
 def LerCsv():
     download_csv()
-    csv = ReadCsv(_fileNameProd1) + ReadCsv(_fileNameProd2,True) + ReadCsv(_fileNameProd3,True) + ReadCsv(_fileNameProd4,True)
-    csv_colunas = csv[0].split(';')
-    csv.sort(key=OrdernarPorNome)
+    Dicionario = {
+        'Viniferas': _fileNameProd1,
+        'Americanas': _fileNameProd2,
+        'Mesa': _fileNameProd3,
+        'SemClasse': _fileNameProd4
+    }
     lista = []
-    for i in range(1, len(csv)):
-        csv_linha = csv[i].split(';')
-        retorno = Retorno(Id=csv_linha[0], Produto=csv_linha[1], Dados=[])
-        for j in range(2,len(csv_colunas)):
-            retorno.Dados.append(RetornoAuxiliar(Ano=csv_colunas[j], Valor=csv_linha[j]))
-        lista.append(retorno)
+
+    for key, val in Dicionario.items():
+
+        csv = ReadCsv(val, key != 'Viniferas')
+        csv_colunas = csv[0].split(';')
+        for i in range(1, len(csv)):
+            csv_linha = csv[i].split(';')
+            retorno = Retorno(Id=csv_linha[0], Nome=csv_linha[1], NomeAmigavel=csv_linha[2], TipoProduto=key, Dados=[])
+            for j in range(3, len(csv_colunas)):
+                print(csv_colunas[j])
+                print(csv_linha[j])
+                retorno.Dados.append(
+                    RetornoAuxiliar(Ano=csv_colunas[j], Valor=csv_linha[j] if csv_linha[j].isdigit() else 0))
+            lista.append(retorno)
     return lista
 
 def OrdernarPorNome(linha):
-    return linha.lower().split('\t')[1]
+    return linha.trim().lower().split('\t')[1]
 
 class RetornoAuxiliar(BaseModel):
     Ano: int
@@ -39,7 +50,9 @@ class RetornoAuxiliar(BaseModel):
 
 class Retorno(BaseModel):
     Id: int
-    Produto: str
+    Nome: str
+    NomeAmigavel: str
+    TipoProduto: str
     Dados: List[RetornoAuxiliar]
 
 
