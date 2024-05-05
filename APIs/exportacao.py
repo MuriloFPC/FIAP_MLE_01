@@ -29,7 +29,8 @@ def LerCsv():
     for key, val in Dicionario.items():
 
         csv = ReadCsv(val, key != 'Vinhos')
-        csv_colunas = csv[0].split(';')
+        if(key == 'Vinhos'):
+            csv_colunas = csv[0].split(';')
         for i in range(1, len(csv)):
             csv_linha = csv[i].split(';')
             retorno = Retorno(Id=csv_linha[0], Pais=csv_linha[1], TipoProduto=key, Dados=[])

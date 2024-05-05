@@ -10,6 +10,7 @@ def download_csv():
 
 
 def LerCsv():
+    download_csv()
     csv = ReadCsv(_fileNameProd)
     csv_colunas = csv[0].split(';')
     lista = []

@@ -28,13 +28,12 @@ def LerCsv():
     for key, val in Dicionario.items():
 
         csv = ReadCsv(val, key != 'Viniferas')
-        csv_colunas = csv[0].split(';')
+        if (key == 'Viniferas'):
+            csv_colunas = csv[0].split(';')
         for i in range(1, len(csv)):
             csv_linha = csv[i].split(';')
             retorno = Retorno(Id=csv_linha[0], Nome=csv_linha[1], NomeAmigavel=csv_linha[2], TipoProduto=key, Dados=[])
             for j in range(3, len(csv_colunas)):
-                print(csv_colunas[j])
-                print(csv_linha[j])
                 retorno.Dados.append(
                     RetornoAuxiliar(Ano=csv_colunas[j], Valor=csv_linha[j] if csv_linha[j].isdigit() else 0))
             lista.append(retorno)
